@@ -2,56 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SVG to PDF Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG to PDF Converter | Simple Online Tool</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h2>Convert SVG to PDF</h2>
-  <form id="uploadForm">
-    <input type="file" id="svgFile" accept=".svg" required />
-    <br><br>
-    <button type="submit">Convert</button>
-  </form>
+  <div class="container">
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+    <h1>SVG to PDF Converter</h1>
+    <p class="description">Quickly convert your SVG images to high-quality PDF documents</p>
+    
+    <form id="uploadForm">
+      <div class="upload-area" id="dropArea">
+        <div class="upload-icon">📁</div>
+        <label for="svgFile" class="file-label">Choose an SVG file or drag it here</label>
+        <input type="file" id="svgFile" class="file-input" accept=".svg" required />
+        <div class="file-name" id="fileName">No file selected</div>
+      </div>
+      
+      <div class="error-message" id="errorMessage"></div>
+      
+      <div class="loading" id="loadingIndicator">
+        <div class="spinner"></div>
+        <p>Converting your file...</p>
+      </div>
+      
+      <button type="submit" class="btn" id="convertBtn">
+        <span>Convert to PDF</span>
+      </button>
+    </form>
+    
+    <div class="features">
+      <h3>Features:</h3>
+      <ul>
+        <li>Simple and easy to use</li>
+        <li>No registration required</li>
+        <li>Preserves vector quality</li>
+      </ul>
+    </div>
+  </div>
+  
+  <footer>
+    <p>© 2025 SVG to PDF Converter. Open Source </p>
+  </footer>
 
-  <script>
-    document.getElementById('uploadForm').addEventListener('submit', async function (event) {
-      event.preventDefault();
-
-      const fileInput = document.getElementById('svgFile');
-      const file = fileInput.files[0];
-
-      if (!file) {
-        alert("Please select an SVG file.");
-        return;
-      }
-
-      const arrayBuffer = await file.arrayBuffer();
-
-      try {
-        const response = await fetch('http://localhost:8080/svg-to-pdf', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'image/svg+xml',
-          },
-          body: arrayBuffer
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to convert SVG. Server responded with " + response.status);
-        }
-
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'result.pdf';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      } catch (error) {
-        alert("Error: " + error.message);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
