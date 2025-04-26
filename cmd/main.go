@@ -11,7 +11,7 @@ func main() {
 	router := gin.Default()
 
 	// Serve static files from the web directory
-	router.Static("/", "./web")
+	router.Static("/", "./docs")
 
 	router.POST("/svg-to-pdf", handler.ConvertSVGToPDF)
 
