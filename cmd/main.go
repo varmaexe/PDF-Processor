@@ -9,8 +9,9 @@ import (
 
 func main() {
 	router := gin.Default()
-	// Serve the HTML file
-	router.StaticFile("/", "./web/index.html")
+
+	// Serve static files from the web directory
+	router.Static("/", "./web")
 
 	router.POST("/svg-to-pdf", handler.ConvertSVGToPDF)
 
